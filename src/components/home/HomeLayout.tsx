@@ -23,14 +23,16 @@ const Boards: React.FC<BoardProps> = ({ xIsNext, squares, onPlay }) => {
   const handleClick = (i: number) => {
     if (CalculateWinner(squares) || squares[i]) return;
     const nextSquares = squares.slice();
-    if (xIsNext) nextSquares[i] = "X";
-    else nextSquares[i] = "O";
+    if (xIsNext) nextSquares[i] = <AiOutlinePlus />;
+    else nextSquares[i] = <AiFillCiCircle />;
     onPlay(nextSquares);
   };
   const winner = CalculateWinner(squares);
-  let status: string;
+  let status: any;
   if (winner) status = "Winner: " + winner;
-  else status = " Next Player: " + xIsNext ? "X" : "O";
+  else
+    status =
+      " Next Player: " + xIsNext ? <AiOutlinePlus /> : <AiFillCiCircle />;
   return (
     <>
       {/* status */}
@@ -68,7 +70,7 @@ const Boards: React.FC<BoardProps> = ({ xIsNext, squares, onPlay }) => {
   );
 };
 const HomeLayout = () => {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [history, setHistory] = useState([Array(12).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove + 2 === 0;
   const currentSquares = history[currentMove];
@@ -84,6 +86,8 @@ const HomeLayout = () => {
   }
 
   const moves = history.map((squares, move) => {
+    console.log();
+
     let description: string;
     if (move > 0) description = "Go to move * " + move;
     // else if (move < 2) description = "CLEAR moves history";
@@ -108,7 +112,7 @@ const HomeLayout = () => {
         />
       </div>
       <div>
-        <h1 className="text-sm font-mono tracking-wide font-semibold my-5">
+        <h1 className="text-sm tracking-wide font-semibold my-5 font-roman">
           Moves Taken
         </h1>
         {/* <div className="cube">
@@ -120,7 +124,7 @@ const HomeLayout = () => {
             <span id="--i:3;">youtube.com/programmerRimon</span>
           </div>
         </div> */}
-        <ul className="grid grid-cols-4 gap-4 p-5 bg-slate-600 font-roman">
+        <ul className="grid grid-cols-4 gap-4 p-5 bg-slate-600 font-roman rounded-2xl shadow-2xl">
           {moves}
         </ul>
       </div>
@@ -147,4 +151,37 @@ function CalculateWinner(squares: any[]) {
   }
   return null;
 }
+
+const consoleOBJ = {
+  name: "wilson",
+  age: 20,
+  location: { zip: 20 },
+};
+
+// //// Comprehensive list of console properties and methods in Javascript
+// // writes an error message to the console if the condition is false
+// console.assert(false, "");
+// // clears the console
+// console.clear();
+// // logs the number of times that this particulae call to `count()` has been called
+// console.count("");
+// // Displays a message with the optional objects to tje consoole with the log level debug
+// console.debug({});
+// // Displays an interactive list of properties of a specified JS OBJ
+// console.dir(consoleOBJ);
+// /// Displays an HTML element tree of the specified node
+// console.dirxml(consoleOBJ);s
+// // Writes an error to the console
+// console.error([]);
+// // alias for console.error
+// console.group("hello");
+// /// created a ew inline-group, indenting all followning output by another level
+// console.groupCollapsed("he");
+// // exit inline group
+// console.groupEnd();
+// // infromative logging of information
+// console.info(consoleOBJ);
+// /// maks timeline
+// console.table(consoleOBJ);
+
 export default HomeLayout;
